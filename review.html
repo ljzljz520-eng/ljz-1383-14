@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>站主审稿台 | 实习日记</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Noto+Sans+SC:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        .wrap { max-width: 1080px; margin: 0 auto; padding: 8rem 2rem 5rem; }
+        .panel { padding: 1.8rem 2rem; border-radius: 1.2rem; margin-bottom: 1.6rem; }
+        .panel h2 { font-size: 1.15rem; margin-bottom: 1rem; color: var(--primary); }
+        .panel h2 small { color: var(--text-muted); font-weight: 400; margin-left: .6rem; font-size: .8rem; }
+        textarea { width: 100%; min-height: 90px; background: rgba(15,23,42,.6); color: var(--text-white);
+            border: 1px solid var(--glass-border); border-radius: .8rem; padding: .8rem 1rem; font-family: inherit;
+            font-size: .9rem; line-height: 1.7; resize: vertical; }
+        textarea:focus { outline: none; border-color: var(--primary); }
+        label { font-size: .85rem; color: var(--text-muted); display: block; margin: .8rem 0 .3rem; }
+        input[type=text] { background: rgba(15,23,42,.6); color: var(--text-white); border: 1px solid var(--glass-border);
+            border-radius: .6rem; padding: .5rem .8rem; font-size: .9rem; }
+        .btn { padding: .5rem 1.3rem; border-radius: 999px; font-weight: 600; display: inline-block; cursor: pointer;
+            border: none; font-size: .88rem; background: var(--primary); color: #fff; transition: var(--transition); }
+        .btn:hover { filter: brightness(1.15); }
+        .btn.ghost { background: transparent; border: 1px solid var(--glass-border); color: var(--text-muted); }
+        .btn.warn { background: #b45309; }
+        .btn.sm { padding: .25rem .9rem; font-size: .78rem; }
+        .row { display: flex; gap: .8rem; flex-wrap: wrap; align-items: center; margin-top: 1rem; }
+        .badge { padding: .15rem .7rem; border-radius: 999px; border: 1px solid var(--glass-border); font-size: .75rem; }
+        .b-pending { color: #fbbf24; border-color: #fbbf24; }
+        .b-approved { color: #34d399; border-color: #34d399; }
+        .b-dismissed { color: var(--text-muted); }
+        .b-stale { color: #f87171; border-color: #f87171; }
+        table { width: 100%; border-collapse: collapse; font-size: .85rem; }
+        td, th { padding: .55rem .7rem; border-bottom: 1px solid var(--glass-border); text-align: left; vertical-align: top; }
+        th { color: var(--text-muted); font-weight: 400; }
+        .muted { color: var(--text-muted); font-size: .85rem; }
+        .conflict { border-left: 3px solid #f87171; padding: 1rem 1.2rem; border-radius: .8rem; margin-top: 1rem; display: none; }
+        .compare-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; }
+        .compare-grid h4 { font-size: .9rem; margin-bottom: .5rem; }
+        .compare-grid ul { font-size: .82rem; color: var(--text-muted); }
+        .compare-grid li { padding: .3rem 0; border-bottom: 1px dashed var(--glass-border); }
+        select { background: rgba(15,23,42,.6); color: var(--text-white); border: 1px solid var(--glass-border);
+            border-radius: .6rem; padding: .5rem .8rem; }
+    </style>
+</head>
+<body>
+    <div id="toast-container"></div>
+    <header class="glass scrolled">
+        <div class="container"><nav>
+            <a href="index.html" class="logo">灵墨创意</a>
+            <ul class="nav-links">
+                <li><a href="index.html">首页</a></li>
+                <li><a href="diary.html">实习日记</a></li>
+                <li><a href="review.html" style="color: var(--primary);">审稿台</a></li>
+            </ul>
+        </nav></div>
+    </header>
+
+    <main class="wrap">
+        <h1>站主审稿台</h1>
+        <p class="muted" style="margin:.6rem 0 1.6rem;">私密原稿仅在此可见；公开渠道（页面 / 搜索 / RSS / 摘要卡 / 下载）全部生成自批准的公开派生稿。</p>
+
+        <div class="panel glass">
+            <h2>条目与项目</h2>
+            <div class="row" style="margin-top:0;">
+                <select id="entry-select"></select>
+                <span id="entry-status" class="badge"></span>
+                <span id="entry-versions" class="muted"></span>
+            </div>
+            <div class="row">
+                <span class="muted">引用项目：</span><span id="entry-work"></span>
+                <button class="btn ghost sm" id="btn-toggle-work">切换项目公开/私密</button>
+            </div>
+        </div>
+
+        <div class="panel glass">
+            <h2>① 编辑私密原稿 <small>问题 / 行动 / 结果 / 反思 · 乐观锁防并发覆盖</small></h2>
+            <div id="sections-editor"></div>
+            <div class="row">
+                <button class="btn" id="btn-save">保存原稿</button>
+                <span class="muted" id="base-ver"></span>
+            </div>
+            <div class="conflict glass" id="conflict-box">
+                <strong>保存冲突：</strong><span id="conflict-msg"></span>
+                <div class="row"><button class="btn warn sm" id="btn-reload">载入最新版本重新编辑</button></div>
+            </div>
+        </div>
+
+        <div class="panel glass">
+            <h2>② 敏感片段 <small>规则辅助检测 + 人工标注，逐一审决</small></h2>
+            <div class="row" style="margin-top:0;">
+                <button class="btn ghost sm" id="btn-detect">运行规则检测</button>
+                <button class="btn ghost sm" id="btn-compare">人工 vs 规则对比</button>
+            </div>
+            <div class="row" style="margin-top:.6rem;">
+                <select id="mark-section"><option value="problem">问题</option><option value="action">行动</option>
+                    <option value="result">结果</option><option value="reflection">反思</option></select>
+                <input type="text" id="mark-text" placeholder="要隐去的原文片段" size="24">
+                <input type="text" id="mark-note" placeholder="备注（如：同事姓名）" size="16">
+                <button class="btn sm" id="btn-mark">人工标注</button>
+            </div>
+            <table id="spans-table" style="margin-top:1rem;"></table>
+            <div class="compare-grid" id="compare-box" style="margin-top:1rem;"></div>
+        </div>
+
+        <div class="panel glass">
+            <h2>③ 审阅结论 <small>存在未决片段 / 失效锚点 / 未检附件时无法通过</small></h2>
+            <div class="row" style="margin-top:0;">
+                <input type="text" id="review-note" placeholder="审阅结论说明（必填意见）" size="30" value="同意发布">
+                <button class="btn" id="btn-approve">通过并生成公开稿</button>
+                <button class="btn warn" id="btn-reject">退回修改</button>
+            </div>
+            <p class="muted" id="blockers" style="margin-top:.8rem;"></p>
+        </div>
+
+        <div class="panel glass">
+            <h2>④ 发布与渠道 <small>异步任务；旧版本任务晚到会被丢弃</small></h2>
+            <div class="row" style="margin-top:0;">
+                <button class="btn" id="btn-publish">发布当前公开稿</button>
+                <button class="btn ghost sm" id="btn-refresh-search">刷新搜索缓存</button>
+                <button class="btn ghost sm" id="btn-run-jobs">执行任务队列</button>
+            </div>
+            <table id="channels-table" style="margin-top:1rem;"></table>
+        </div>
+
+        <div class="panel glass">
+            <h2>⑤ 附件 <small>元数据另行检查；换图后检查作废</small></h2>
+            <table id="att-table"></table>
+        </div>
+    </main>
+
+    <script src="js/main.js"></script>
+    <script>
+        const $ = s => document.querySelector(s);
+        const SECTION_KEYS = [['problem','问题'],['action','行动'],['result','结果'],['reflection','反思']];
+        const SPAN_STATUS = { pending: ['待审','b-pending'], approved: ['已批准','b-approved'],
+            dismissed: ['已驳回','b-dismissed'], stale: ['锚点失效','b-stale'] };
+        const CH_NAMES = { search: '搜索索引', rss: 'RSS', card: '摘要卡', download: '下载文本' };
+        let entry = null, works = [], baseVersion = null;
+
+        const api = async (path, method, body) => {
+            const r = await fetch(path, { method: method || 'GET',
+                headers: body ? { 'Content-Type': 'application/json' } : undefined,
+                body: body ? JSON.stringify(body) : undefined });
+            const data = await r.json().catch(() => ({}));
+            return { status: r.status, data };
+        };
+
+        async function loadState(keepSelection) {
+            const { data } = await api('/api/state');
+            works = data.works;
+            const sel = $('#entry-select');
+            const prev = keepSelection ? sel.value : null;
+            sel.innerHTML = data.entries.map(e => `<option value="${e.id}">${e.title}（${e.id}）</option>`).join('');
+            if (prev) sel.value = prev;
+            if (!sel.value && data.entries[0]) sel.value = data.entries[0].id;
+            await loadEntry();
+        }
+
+        async function loadEntry() {
+            const id = $('#entry-select').value;
+            if (!id) return;
+            const { data } = await api('/api/entries/' + id);
+            entry = data;
+            baseVersion = data.original.version;
+            $('#entry-status').textContent = '状态：' + data.status;
+            $('#entry-versions').textContent = `原稿 v${data.original.version} · 公开稿 ${data.public ? 'v' + data.public.version : '未生成'}`;
+            const w = works.find(x => x.id === data.workId);
+            $('#entry-work').textContent = `${data.workTitleSnapshot}（${w ? w.visibility : '?'}）`;
+            $('#base-ver').textContent = '基于原稿 v' + baseVersion + ' 编辑';
+            $('#sections-editor').innerHTML = SECTION_KEYS.map(([k, label]) =>
+                `<label>${label}</label><textarea data-k="${k}"></textarea>`).join('');
+            document.querySelectorAll('#sections-editor textarea').forEach(t => { t.value = data.original.sections[t.dataset.k] || ''; });
+            $('#conflict-box').style.display = 'none';
+            renderSpans(); renderChannels(); renderAttachments();
+        }
+
+        function renderSpans() {
+            const rows = entry.spans.map(s => {
+                const [label, cls] = SPAN_STATUS[s.status];
+                const acts = [];
+                if (s.status === 'pending') {
+                    acts.push(`<button class="btn sm" data-act="approve" data-id="${s.id}">批准</button>`);
+                    acts.push(`<button class="btn ghost sm" data-act="dismiss" data-id="${s.id}">驳回</button>`);
+                } else if (s.status === 'stale') {
+                    acts.push(`<button class="btn warn sm" data-act="reanchor" data-id="${s.id}">重新定位</button>`);
+                    acts.push(`<button class="btn ghost sm" data-act="dismiss" data-id="${s.id}">驳回</button>`);
+                }
+                return `<tr><td><span class="badge ${cls}">${label}</span></td>
+                    <td>${s.section}</td><td>「${s.exact}」</td>
+                    <td class="muted">${s.author === 'rule' ? '规则·' + (s.rule || '') : '人工'}${s.note ? ' · ' + s.note : ''}</td>
+                    <td>${acts.join(' ')}</td></tr>`;
+            }).join('');
+            $('#spans-table').innerHTML = `<tr><th>状态</th><th>段落</th><th>片段</th><th>来源</th><th>操作</th></tr>${rows}`;
+            $('#spans-table').querySelectorAll('button').forEach(b => b.onclick = () => spanAction(b.dataset.id, b.dataset.act));
+        }
+
+        async function spanAction(id, act) {
+            let r;
+            if (act === 'reanchor') r = await api(`/api/entries/${entry.id}/spans/${id}/reanchor`, 'POST', {});
+            else r = await api(`/api/entries/${entry.id}/spans/${id}/decision`, 'POST', { decision: act, reviewer: '站主' });
+            if (r.status >= 400) showToast(r.data.message || r.data.error || '操作失败', 'error');
+            else showToast(act === 'reanchor' ? '已重新定位，回到待审' : '已记录');
+            await loadEntry();
+        }
+
+        function renderChannels() {
+            const cv = entry.channels;
+            const rows = Object.entries(cv.channels).map(([n, c]) =>
+                `<tr><td>${CH_NAMES[n]}</td><td>${c.publishedVersion ? 'v' + c.publishedVersion : '—'}</td>
+                 <td>${c.status}${n === 'search' && c.cacheStale ? `（缓存 v${c.cacheVersion} 待刷新）` : ''}</td></tr>`).join('');
+            const ret = cv.retraction ? `<tr><td colspan="3">撤回进度 ${cv.retraction.retracted}/${cv.retraction.total}</td></tr>` : '';
+            $('#channels-table').innerHTML = `<tr><th>渠道</th><th>实际版本</th><th>状态</th></tr>${rows}${ret}`;
+        }
+
+        function renderAttachments() {
+            const rows = (entry.attachments || []).map(a =>
+                `<tr><td>${a.filename}</td>
+                 <td>${a.metaChecked ? '<span class="badge b-approved">元数据已检</span>' : '<span class="badge b-stale">待检查</span>'}
+                     ${a.replacedAt ? '<span class="muted">（替换于 ' + new Date(a.replacedAt).toLocaleString() + '）</span>' : ''}</td>
+                 <td><button class="btn ghost sm" data-rep="${a.id}">模拟换图</button>
+                     <button class="btn sm" data-chk="${a.id}">通过元数据检查</button></td></tr>`).join('');
+            $('#att-table').innerHTML = `<tr><th>文件</th><th>状态</th><th>操作</th></tr>${rows}`;
+            $('#att-table').querySelectorAll('[data-rep]').forEach(b => b.onclick = async () => {
+                await api(`/api/attachments/${b.dataset.rep}/replace`, 'PUT', { filename: 'images/hobby_photography.png' });
+                showToast('已替换图片，元数据检查作废'); await loadEntry();
+            });
+            $('#att-table').querySelectorAll('[data-chk]').forEach(b => b.onclick = async () => {
+                await api(`/api/attachments/${b.dataset.chk}/meta-check`, 'POST', { ok: true, findings: ['已清除 EXIF'] });
+                showToast('元数据检查通过'); await loadEntry();
+            });
+        }
+
+        $('#entry-select').onchange = () => loadEntry();
+
+        $('#btn-save').onclick = async () => {
+            const sections = {};
+            document.querySelectorAll('#sections-editor textarea').forEach(t => sections[t.dataset.k] = t.value);
+            const r = await api(`/api/entries/${entry.id}/original`, 'PUT', { baseVersion, sections, editor: '站主' });
+            if (r.status === 409) {
+                $('#conflict-box').style.display = 'block';
+                $('#conflict-msg').textContent = `${r.data.message}（当前 v${r.data.currentVersion}，由 ${r.data.updatedBy} 修改）`;
+                showToast('保存冲突：他人已修改', 'error');
+                return;
+            }
+            showToast(r.data.drifted ? '已保存；有锚点漂移，条目回到待审' : '原稿已保存 v' + r.data.version);
+            await loadEntry();
+        };
+        $('#btn-reload').onclick = () => loadEntry();
+
+        $('#btn-detect').onclick = async () => {
+            const r = await api(`/api/entries/${entry.id}/detect`, 'POST', {});
+            showToast(`规则新增 ${r.data.added.length} 个候选片段（需人工审决）`);
+            await loadEntry();
+        };
+
+        $('#btn-mark').onclick = async () => {
+            const r = await api(`/api/entries/${entry.id}/spans`, 'POST',
+                { section: $('#mark-section').value, exact: $('#mark-text').value, note: $('#mark-note').value });
+            if (r.status >= 400) return showToast(r.data.error || '标注失败', 'error');
+            showToast('已标注，待审决'); await loadEntry();
+        };
+
+        $('#btn-compare').onclick = async () => {
+            const { data } = await api(`/api/entries/${entry.id}/compare`);
+            const col = (title, arr, fmt) => `<div><h4>${title}（${arr.length}）</h4><ul>${
+                arr.map(x => `<li>${fmt(x)}</li>`).join('') || '<li>无</li>'}</ul></div>`;
+            $('#compare-box').innerHTML =
+                col('共同命中', data.both, x => `「${x.exact}」`) +
+                col('规则遗漏（人工标了规则没标）', data.misses, x => `「${x.exact}」 ${x.note || ''}`) +
+                col('规则误报（规则标了人工没标）', data.falsePositives, x => `「${x.exact}」 ${x.note || ''}`);
+            showToast(data.summary);
+        };
+
+        $('#btn-approve').onclick = async () => {
+            const r = await api(`/api/entries/${entry.id}/review`, 'POST',
+                { conclusion: 'approve', reviewer: '站主', note: $('#review-note').value });
+            if (r.status === 409 && r.data.blockers) {
+                $('#blockers').textContent = '无法通过：' + r.data.blockers.join('；');
+                return showToast('审阅被阻断', 'error');
+            }
+            $('#blockers').textContent = '';
+            showToast('已生成公开稿 v' + r.data.public.version); await loadEntry();
+        };
+        $('#btn-reject').onclick = async () => {
+            await api(`/api/entries/${entry.id}/review`, 'POST', { conclusion: 'reject', reviewer: '站主', note: $('#review-note').value });
+            showToast('已退回修改'); await loadEntry();
+        };
+
+        $('#btn-publish').onclick = async () => {
+            if (!entry.public) return showToast('尚无公开稿', 'error');
+            const r = await api(`/api/entries/${entry.id}/publish`, 'POST', { publicVersion: entry.public.version });
+            if (r.status >= 400) return showToast(r.data.message || (r.data.blockers || []).join('；') || '发布失败', 'error');
+            showToast('发布任务已入队（点"执行任务队列"模拟 worker）');
+        };
+        $('#btn-refresh-search').onclick = async () => {
+            await api(`/api/entries/${entry.id}/refresh-search`, 'POST', {});
+            showToast('刷新任务已入队');
+        };
+        $('#btn-run-jobs').onclick = async () => {
+            const { data } = await api('/api/jobs/run', 'POST', {});
+            const dropped = data.filter(j => j.status === 'dropped');
+            showToast(`执行 ${data.length} 个任务` + (dropped.length ? `，丢弃 ${dropped.length} 个过期任务` : ''));
+            await loadEntry();
+        };
+        $('#btn-toggle-work').onclick = async () => {
+            const w = works.find(x => x.id === entry.workId);
+            const next = w.visibility === 'public' ? 'private' : 'public';
+            await api(`/api/works/${w.id}/visibility`, 'POST', { visibility: next });
+            showToast('项目已转为 ' + next + (next === 'private' ? '，撤回任务已入队' : ''));
+            await loadState(true);
+        };
+
+        loadState().catch(() => showToast('后端未启动：node server/server.js', 'error'));
+    </script>
+</body>
+</html>

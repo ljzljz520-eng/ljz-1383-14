@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>实习日记精选 | 公开稿</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Noto+Sans+SC:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        .page-hero { padding: 10rem 0 4rem; text-align: center; }
+        .page-hero p { color: var(--text-muted); max-width: 640px; margin: 1rem auto 0; }
+        .diary-list { display: grid; gap: 1.5rem; padding-bottom: 6rem; max-width: 860px; margin: 0 auto; }
+        .diary-card { padding: 2rem 2.5rem; border-radius: 1.5rem; display: block; transition: var(--transition); }
+        .diary-card:hover { transform: translateY(-4px); border-color: var(--primary); }
+        .diary-card h3 { margin-bottom: .5rem; }
+        .diary-card p { color: var(--text-muted); font-size: .95rem; }
+        .diary-meta { display: flex; gap: 1rem; margin-top: 1rem; font-size: .8rem; color: var(--text-muted); flex-wrap: wrap; }
+        .badge { padding: .15rem .7rem; border-radius: 999px; border: 1px solid var(--glass-border); font-size: .75rem; }
+        .badge.ver { color: var(--primary); border-color: var(--primary); }
+        .notice { max-width: 860px; margin: 0 auto 2rem; padding: 1rem 1.5rem; border-radius: 1rem; font-size: .85rem; color: var(--text-muted); }
+    </style>
+</head>
+<body>
+    <div id="toast-container"></div>
+    <header class="glass scrolled">
+        <div class="container"><nav>
+            <a href="index.html" class="logo">灵墨创意</a>
+            <ul class="nav-links">
+                <li><a href="index.html">首页</a></li>
+                <li><a href="hobbies.html">兴趣爱好</a></li>
+                <li><a href="portfolio.html">个人作品</a></li>
+                <li><a href="diary.html" style="color: var(--primary);">实习日记</a></li>
+                <li><a href="contact.html">联系我</a></li>
+            </ul>
+        </nav></div>
+    </header>
+
+    <section class="page-hero">
+        <div class="container">
+            <h1>实习日记精选</h1>
+            <p>以下内容为经审稿流程批准的<strong>公开派生稿</strong>，敏感信息已脱敏。每个条目都标注了实际公开版本，可回溯历史版本。</p>
+        </div>
+    </section>
+
+    <main class="container">
+        <div class="notice glass">本页及搜索、RSS、摘要卡、下载文本均生成自批准的公开稿；私密原稿不会出现在任何公开渠道。</div>
+        <div class="diary-list" id="diary-list">
+            <p style="text-align:center;color:var(--text-muted);">正在加载…（需启动后端：node server/server.js）</p>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-bottom"><p>&copy; 2024 林墨的个人主页 · <a href="review.html" style="color:var(--text-muted);">站主审稿台</a></p></div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script>
+        fetch('/api/entries').then(r => r.json()).then(list => {
+            const box = document.getElementById('diary-list');
+            if (!Array.isArray(list) || list.length === 0) {
+                box.innerHTML = '<p style="text-align:center;color:var(--text-muted);">暂无已发布的公开稿。</p>';
+                return;
+            }
+            box.innerHTML = list.map(e => `
+                <a class="diary-card glass" href="diary-detail.html?id=${encodeURIComponent(e.id)}">
+                    <h3>${e.title}</h3>
+                    <p>${e.excerpt}…</p>
+                    <div class="diary-meta">
+                        <span class="badge ver">公开版本 v${e.version}</span>
+                        <span class="badge">来源项目：${e.work}</span>
+                    </div>
+                </a>`).join('');
+        }).catch(() => {
+            document.getElementById('diary-list').innerHTML =
+                '<p style="text-align:center;color:var(--text-muted);">后端服务未启动，无法加载公开稿。请运行 <code>node server/server.js</code> 后刷新。</p>';
+        });
+    </script>
+</body>
+</html>
