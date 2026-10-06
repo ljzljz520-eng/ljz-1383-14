@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>联系我 | 开启对话</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Noto+Sans+SC:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        .contact-container {
+            padding: 12rem 0 8rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6rem;
+            align-items: start;
+        }
+
+        .contact-info h1 {
+            font-size: 3.5rem;
+            line-height: 1.1;
+            margin-bottom: 2rem;
+        }
+
+        .contact-form-wrapper {
+            padding: 3rem;
+            border-radius: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 2rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.8rem;
+            font-weight: 600;
+            color: var(--text-muted);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 1rem 1.5rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--glass-border);
+            border-radius: 0.8rem;
+            color: white;
+            font-family: inherit;
+            transition: var(--transition);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        textarea.form-control {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 1.2rem;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .submit-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(99, 102, 241, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <div id="toast-container"></div>
+    <header class="glass scrolled">
+        <div class="container"><nav>
+            <a href="index.html" class="logo">灵墨创意</a>
+            <ul class="nav-links">
+                <li><a href="index.html">首页</a></li>
+                <li><a href="hobbies.html">兴趣爱好</a></li>
+                <li><a href="portfolio.html">个人作品</a></li>
+                <li><a href="contact.html" style="color: var(--primary);">联系我</a></li>
+            </ul>
+        </nav></div>
+    </header>
+
+    <main class="container">
+        <div class="contact-container">
+            <div class="contact-info">
+                <h1>准备好开始<br><span style="color: var(--primary);">下一个精彩</span>项目了吗？</h1>
+                <p style="color: var(--text-muted); font-size: 1.2rem; margin-top: 2rem;">无论是咨询业务、寻求合作，还是仅仅想打个招呼，我随时欢迎您的来信。</p>
+                
+                <div style="margin-top: 4rem;">
+                    <div style="margin-bottom: 2rem;">
+                        <h4 style="color: var(--primary);">邮箱</h4>
+                        <p>hello@creative.me</p>
+                    </div>
+                    <div>
+                        <h4 style="color: var(--primary);">社交媒体</h4>
+                        <p>Wechat / Dribbble / Instagram</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="contact-form-wrapper glass">
+                <form id="contact-form">
+                    <div class="form-group">
+                        <label for="name">您的姓名</label>
+                        <input type="text" id="name" class="form-control" placeholder="请输入您的姓名">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">常用邮箱</label>
+                        <input type="email" id="email" class="form-control" placeholder="email@example.com">
+                    </div>
+                    <div class="form-group">
+                        <label for="message">您的留言</label>
+                        <textarea id="message" class="form-control" placeholder="请详细描述您的需求或想法..."></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn shadow">发送信息</button>
+                    <p style="text-align: center; font-size: 0.8rem; color: var(--text-muted); margin-top: 1.5rem;">※ 我们承诺保护您的隐私信息</p>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-bottom">
+                <p>&copy; 2024 林墨的个人主页. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+    <script src="js/main.js"></script>
+</body>
+</html>

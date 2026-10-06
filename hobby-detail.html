@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>摄影详情 | 林墨的作品集</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Noto+Sans+SC:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        .detail-hero {
+            height: 60vh;
+            background: linear-gradient(rgba(15, 23, 42, 0.4), var(--bg-dark)), url('images/hobby_photography.png');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: flex-end;
+            padding-bottom: 5rem;
+        }
+
+        .content-area {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 4rem;
+            margin-top: -5rem;
+            position: relative;
+            z-index: 10;
+        }
+
+        .article-content {
+            padding: 3rem;
+            border-radius: 2rem;
+        }
+
+        .stats-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+        }
+
+        .stats-table th, .stats-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .stats-table th {
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .sidebar-box {
+            padding: 2rem;
+            border-radius: 1.5rem;
+            height: fit-content;
+        }
+    </style>
+</head>
+<body>
+    <div id="toast-container"></div>
+    <header class="glass scrolled">
+        <div class="container"><nav>
+            <a href="index.html" class="logo">灵墨创意</a>
+            <ul class="nav-links">
+                <li><a href="index.html">首页</a></li>
+                <li><a href="hobbies.html" style="color: var(--primary);">兴趣爱好</a></li>
+                <li><a href="portfolio.html">个人作品</a></li>
+                <li><a href="contact.html">联系我</a></li>
+            </ul>
+        </nav></div>
+    </header>
+
+    <div class="detail-hero">
+        <div class="container">
+            <h1>光影的艺术：为什么我着迷于摄影</h1>
+        </div>
+    </div>
+
+    <main class="container">
+        <div class="content-area">
+            <article class="article-content glass">
+                <p>摄影对我来说，不仅仅是按下快门的瞬间，而是对生活细微之处的敏锐观察。每一张照片背后都有一个故事，每一次构图都是在与世界进行一场无声的对话。</p>
+                <br>
+                <h3>摄影器材清单</h3>
+                <table class="stats-table">
+                    <thead>
+                        <tr>
+                            <th>类别</th>
+                            <th>型号</th>
+                            <th>用途</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>机身</td>
+                            <td>Leica M11</td>
+                            <td>纪实、街拍</td>
+                        </tr>
+                        <tr>
+                            <td>机身</td>
+                            <td>Sony A7R V</td>
+                            <td>商业、风光</td>
+                        </tr>
+                        <tr>
+                            <td>镜头</td>
+                            <td>Summilux 35mm f/1.4</td>
+                            <td>人文之眼</td>
+                        </tr>
+                        <tr>
+                            <td>镜头</td>
+                            <td>85mm f/1.4 GM</td>
+                            <td>人像创作</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p>在过去的三年里，我走过了 15 个城市，拍摄了超过 20,000 张照片。这些影像记录了我对色彩的理解以及对构图的不断实验。</p>
+            </article>
+
+            <aside class="sidebar-box glass">
+                <h3>快捷操作</h3>
+                <ul style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 1rem;">
+                    <li><a href="hobbies.html" style="color: var(--primary);">← 返回列表</a></li>
+                    <li><a href="#">分享我的作品</a></li>
+                    <li><a href="contact.html">一起约拍？</a></li>
+                </ul>
+                <hr style="margin: 2rem 0; border: none; border-top: 1px solid var(--glass-border);">
+                <h3>近期展览</h3>
+                <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 1rem;">2024.03 - "上海旧影" 个展 @ 淮海路艺术廊</p>
+            </aside>
+        </div>
+    </main>
+
+    <footer style="margin-top: 10rem;">
+        <div class="container">
+            <div class="footer-bottom">
+                <p>&copy; 2024 林墨的个人主页. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+    <script src="js/main.js"></script>
+</body>
+</html>

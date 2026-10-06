@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neo-Finance App | 案例研究</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Noto+Sans+SC:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        .work-hero {
+            padding: 12rem 0 6rem;
+            background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+            text-align: center;
+        }
+
+        .work-metadata {
+            display: flex;
+            justify-content: center;
+            gap: 4rem;
+            margin-top: 3rem;
+            padding: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .meta-item h4 {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .section-padding {
+            padding: 8rem 0;
+        }
+
+        .case-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .case-image {
+            width: 100%;
+            border-radius: 2rem;
+            margin: 3rem 0;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+    </style>
+</head>
+<body>
+    <div id="toast-container"></div>
+    <header class="glass scrolled">
+        <div class="container"><nav>
+            <a href="index.html" class="logo">灵墨创意</a>
+            <ul class="nav-links">
+                <li><a href="index.html">首页</a></li>
+                <li><a href="hobbies.html">兴趣爱好</a></li>
+                <li><a href="portfolio.html" style="color: var(--primary);">个人作品</a></li>
+                <li><a href="contact.html">联系我</a></li>
+            </ul>
+        </nav></div>
+    </header>
+
+    <div class="work-hero">
+        <div class="container">
+            <span class="tag" style="background: rgba(255,255,255,0.2); color: white;">UI/UX DESIGN</span>
+            <h1 style="font-size: 3.5rem; margin-top: 1rem;">Neo-Finance App</h1>
+            <div class="work-metadata">
+                <div class="meta-item">
+                    <h4>客户</h4>
+                    <p>个人练习作品</p>
+                </div>
+                <div class="meta-item">
+                    <h4>发布时间</h4>
+                    <p>2023年10月</p>
+                </div>
+                <div class="meta-item">
+                    <h4>职责</h4>
+                    <p>界面设计 / 原型制作</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <main class="container section-padding">
+        <div class="case-content">
+            <h2>项目背景</h2>
+            <p style="color: var(--text-muted); margin-top: 1.5rem;">Neo-Finance 是一款旨在简化个人资产管理的移动端应用。在调研中我们发现，传统财务应用往往过于严肃且数据展示复杂，用户很难产生持续记账的动力。因此，我决定尝试一种更具现代感、简洁且充满活力的视觉风格。</p>
+            
+            <img src="images/work_ui_design.png" alt="Neo-Finance App Design" class="case-image">
+
+            <h2>设计解决路径</h2>
+            <p style="color: var(--text-muted); margin-top: 1.5rem;">我们采用了“毛玻璃” (Glassmorphism) 作为核心视觉语言，通过层级分明的透明度处理，让复杂的财务数据在视觉上变得轻盈。同时，使用了高饱和度的渐变色来标注不同的资产类别，增强识别度。</p>
+            
+            <div style="background: var(--card-bg); padding: 3rem; border-radius: 2rem; margin: 4rem 0;">
+                <h3>核心挑战</h3>
+                <ul style="margin-top: 1.5rem; list-style: disc; padding-left: 1.5rem;">
+                    <li>平衡视觉美感与数据易读性。</li>
+                    <li>在移动端实现高性能的实时毛玻璃模糊效果。</li>
+                    <li>构建一套可复用的响应式组件系统。</li>
+                </ul>
+            </div>
+
+            <a href="portfolio.html" class="btn btn-outline">← 返回作品集</a>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-bottom">
+                <p>&copy; 2024 林墨的个人主页. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+    <script src="js/main.js"></script>
+</body>
+</html>

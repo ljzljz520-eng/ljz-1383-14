@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>个人主页 | 探索创意与生活</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Noto+Sans+SC:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            background: linear-gradient(rgba(15, 23, 42, 0.7), rgba(15, 23, 42, 0.7)), url('images/hero_bg.png');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .hero-content h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .hero-content p {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            margin-bottom: 2.5rem;
+            max-width: 600px;
+            animation: fadeInUp 1s ease-out 0.2s backwards;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1.5rem;
+            animation: fadeInUp 1s ease-out 0.4s backwards;
+        }
+
+        .btn {
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-outline {
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .section-title {
+            text-align: center;
+            margin: 5rem 0 3rem;
+            font-size: 2.5rem;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            padding: 2.5rem;
+            border-radius: 1.5rem;
+            transition: var(--transition);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--primary);
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <div id="toast-container"></div>
+
+    <header>
+        <div class="container">
+            <nav>
+                <a href="index.html" class="logo">灵墨创意</a>
+                <ul class="nav-links">
+                    <li><a href="index.html">首页</a></li>
+                    <li><a href="hobbies.html">兴趣爱好</a></li>
+                    <li><a href="portfolio.html">个人作品</a></li>
+                    <li><a href="contact.html">联系我</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>创造，不仅仅是表达</h1>
+                <p>你好，我是林墨。一名热衷于将创意转化为现实的设计师。在这里，我分享我的生活见解、摄影作品以及我参与的每一个精彩项目。</p>
+                <div class="cta-buttons">
+                    <a href="portfolio.html" class="btn btn-primary">查看作品</a>
+                    <a href="contact.html" class="btn btn-outline">开始合作</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <main class="container">
+        <h2 class="section-title">我的世界</h2>
+        <div class="features-grid">
+            <div class="feature-card glass">
+                <h3>个人见解</h3>
+                <p>关于设计、技术与职场的一些深度思考与感悟。</p>
+                <a href="hobbies.html" style="color: var(--primary); margin-top: 1rem; display: block;">了解更多 →</a>
+            </div>
+            <div class="feature-card glass">
+                <h3>兴趣爱好</h3>
+                <p>从胶片摄影到山地骑行，探索生活中的无限可能。</p>
+                <a href="hobbies.html" style="color: var(--primary); margin-top: 1rem; display: block;">了解更多 →</a>
+            </div>
+            <div class="feature-card glass">
+                <h3>作品展示</h3>
+                <p>精选的 UI 设计作品、前端项目以及品牌策划案例。</p>
+                <a href="portfolio.html" style="color: var(--primary); margin-top: 1rem; display: block;">查看画廊 →</a>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-info">
+                    <span class="logo">灵墨创意</span>
+                    <p style="margin-top: 1rem; color: var(--text-muted);">用代码和设计构建美好未来。</p>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="index.html">首页</a></li>
+                    <li><a href="hobbies.html">兴趣</a></li>
+                    <li><a href="portfolio.html">作品</a></li>
+                    <li><a href="contact.html">联系</a></li>
+                </ul>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 林墨的个人主页. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>个人作品 | 创意实践</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Noto+Sans+SC:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        .page-header {
+            padding: 10rem 0 5rem;
+            text-align: center;
+        }
+
+        .filter-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 4rem;
+        }
+
+        .tab {
+            padding: 0.5rem 1.5rem;
+            border-radius: 30px;
+            cursor: pointer;
+            border: 1px solid var(--glass-border);
+            transition: var(--transition);
+        }
+
+        .tab.active {
+            background: var(--primary);
+            border-color: var(--primary);
+        }
+
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+            gap: 3rem;
+        }
+
+        .work-card {
+            border-radius: 1.5rem;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .work-img {
+            height: 300px;
+            background-size: cover;
+            background-position: center;
+            transition: transform 0.5s ease;
+        }
+
+        .work-card:hover .work-img {
+            transform: scale(1.05);
+        }
+
+        .work-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(15, 23, 42, 0.9), transparent);
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .work-card:hover .work-overlay {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <div id="toast-container"></div>
+    <header class="glass scrolled">
+        <div class="container"><nav>
+            <a href="index.html" class="logo">灵墨创意</a>
+            <ul class="nav-links">
+                <li><a href="index.html">首页</a></li>
+                <li><a href="hobbies.html">兴趣爱好</a></li>
+                <li><a href="portfolio.html" style="color: var(--primary);">个人作品</a></li>
+                <li><a href="contact.html">联系我</a></li>
+            </ul>
+        </nav></div>
+    </header>
+
+    <div class="page-header">
+        <div class="container">
+            <h1>精选作品</h1>
+            <p style="color: var(--text-muted); margin-top: 1rem;">每一次设计都是在解决一个独特的问题。</p>
+        </div>
+    </div>
+
+    <main class="container">
+        <div class="filter-tabs">
+            <div class="tab active" data-filter="all">全部</div>
+            <div class="tab" data-filter="ui">UI 设计</div>
+            <div class="tab" data-filter="branding">品牌视觉</div>
+            <div class="tab" data-filter="code">代码实现</div>
+        </div>
+
+        <div class="portfolio-grid">
+            <div class="work-card glass" data-category="ui">
+                <div class="work-img" style="background-image: url('images/work_ui_design.png');"></div>
+                <div class="work-overlay">
+                    <h3>Neo-Finance App</h3>
+                    <p style="font-size: 0.9rem; margin: 0.5rem 0 1rem;">基于新拟态风格的个人资产管理应用设计。</p>
+                    <a href="work-detail.html" class="btn btn-primary" style="padding: 0.4rem 1.2rem; font-size: 0.9rem; width: fit-content;">查看案例</a>
+                </div>
+            </div>
+
+            <div class="work-card glass" data-category="branding">
+                <div class="work-img" style="background-color: #334155; display: flex; align-items: center; justify-content: center; font-size: 5rem;">✨</div>
+                <div class="work-overlay">
+                    <h3>Solar Logo Design</h3>
+                    <p style="font-size: 0.9rem; margin: 0.5rem 0 1rem;">为一家可再生能源公司打造的全套品牌识别系统。</p>
+                    <a href="solar-detail.html" class="btn btn-primary" style="padding: 0.4rem 1.2rem; font-size: 0.9rem; width: fit-content;">查看案例</a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer style="margin-top: 10rem;">
+        <div class="container">
+            <div class="footer-bottom">
+                <p>&copy; 2024 林墨的个人主页. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+    <script src="js/main.js"></script>
+</body>
+</html>

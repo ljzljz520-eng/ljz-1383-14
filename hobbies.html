@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>兴趣爱好 | 灵感来源</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Noto+Sans+SC:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        .page-header {
+            padding: 10rem 0 5rem;
+            text-align: center;
+            background: linear-gradient(to bottom, rgba(99, 102, 241, 0.1), transparent);
+        }
+
+        .hobby-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2.5rem;
+            margin-bottom: 5rem;
+        }
+
+        .hobby-card {
+            border-radius: 2rem;
+            overflow: hidden;
+            transition: var(--transition);
+        }
+
+        .hobby-image {
+            height: 250px;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .hobby-info {
+            padding: 2rem;
+        }
+
+        .tag {
+            background: rgba(99, 102, 241, 0.2);
+            padding: 0.3rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+    <div id="toast-container"></div>
+    <header class="glass scrolled">
+        <div class="container">
+            <nav>
+                <a href="index.html" class="logo">灵墨创意</a>
+                <ul class="nav-links">
+                    <li><a href="index.html">首页</a></li>
+                    <li><a href="hobbies.html" style="color: var(--primary);">兴趣爱好</a></li>
+                    <li><a href="portfolio.html">个人作品</a></li>
+                    <li><a href="contact.html">联系我</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="page-header">
+        <div class="container">
+            <h1>我的兴趣爱好</h1>
+            <p style="color: var(--text-muted); margin-top: 1rem;">除了工作，这些是让我保持创造力的源泉。</p>
+        </div>
+    </div>
+
+    <main class="container">
+        <div class="hobby-grid">
+            <div class="hobby-card glass">
+                <div class="hobby-image" style="background-image: url('images/hobby_photography.png');"></div>
+                <div class="hobby-info">
+                    <span class="tag">生活美学</span>
+                    <h3>摄影 - 捕捉光影瞬间</h3>
+                    <p style="color: var(--text-muted); margin: 1rem 0;">在这个数字时代，我更偏爱胶片的质感和每一快门背后的仪式感。</p>
+                    <a href="hobby-detail.html" class="btn btn-outline" style="padding: 0.5rem 1.5rem;">查看详情</a>
+                </div>
+            </div>
+
+            <div class="hobby-card glass">
+                <div class="hobby-image" style="background-color: #1e293b; display: flex; align-items: center; justify-content: center;">
+                    <span style="font-size: 4rem;">🚴‍♂️</span>
+                </div>
+                <div class="hobby-info">
+                    <span class="tag">运动探索</span>
+                    <h3>公路/山地骑行</h3>
+                    <p style="color: var(--text-muted); margin: 1rem 0;">在风中自由穿梭，感受身体与速度的完美契合。</p>
+                    <a href="#" class="btn btn-outline" style="padding: 0.5rem 1.5rem; opacity: 0.5; pointer-events: none;">即将发布</a>
+                </div>
+            </div>
+
+            <div class="hobby-card glass">
+                <div class="hobby-image" style="background-color: #1e293b; display: flex; align-items: center; justify-content: center;">
+                    <span style="font-size: 4rem;">🎸</span>
+                </div>
+                <div class="hobby-info">
+                    <span class="tag">音乐创作</span>
+                    <h3>吉他与合成器</h3>
+                    <p style="color: var(--text-muted); margin: 1rem 0;">旋律是情感的出口，在这里我实验不同的声音景观。</p>
+                    <a href="#" class="btn btn-outline" style="padding: 0.5rem 1.5rem; opacity: 0.5; pointer-events: none;">即将发布</a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-bottom">
+                <p>&copy; 2024 林墨的个人主页. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+    <script src="js/main.js"></script>
+</body>
+</html>
