@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>审稿与公开渠道状态 | 灵墨创意</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Noto+Sans+SC:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        body { background: radial-gradient(circle at top, #1e293b 0%, var(--bg-dark) 60%); min-height: 100vh; }
+        .wrap { max-width: 1080px; margin: 0 auto; padding: 2rem 1.2rem 4rem; }
+        h1 { font-size: 2.2rem; margin: 1rem 0 .4rem; }
+        .sub { color: var(--text-muted); margin-bottom: 1.5rem; line-height: 1.7; }
+        .notice { border: 1px solid rgba(234,179,8,.35); background: rgba(234,179,8,.08); border-radius: .9rem; padding: 1rem 1.2rem; color: #fde68a; font-size: .95rem; line-height: 1.7; margin-bottom: 2rem; }
+        .entry { background: var(--card-bg); border: 1px solid var(--glass-border); border-radius: 1.2rem; padding: 1.4rem 1.6rem; margin-bottom: 1.4rem; backdrop-filter: blur(12px); }
+        .entry h3 { margin: 0 0 .2rem; font-size: 1.15rem; }
+        .entry-meta { color: var(--text-muted); font-size: .85rem; margin-bottom: 1rem; }
+        table { width: 100%; border-collapse: collapse; font-size: .9rem; }
+        th, td { text-align: left; padding: .55rem .6rem; border-bottom: 1px solid var(--glass-border); }
+        th { color: var(--text-muted); font-weight: 400; }
+        .pill { display: inline-block; padding: .15rem .6rem; border-radius: 999px; font-size: .78rem; }
+        .live { background: rgba(34,197,94,.15); color: #86efac; }
+        .withdrawing { background: rgba(234,179,8,.15); color: #fde047; }
+        .withdrawn, .not-published { background: rgba(148,163,184,.15); color: #cbd5e1; }
+        .ver { color: var(--primary); font-weight: 600; }
+        .versions { margin-top: .8rem; font-size: .85rem; color: var(--text-muted); }
+        .rulebox { margin-top: 2rem; }
+        .rulebox h2 { font-size: 1.3rem; }
+        .rulebox ul { color: var(--text-muted); line-height: 1.9; padding-left: 1.2rem; }
+        #status-root .loading { color: var(--text-muted); }
+    </style>
+</head>
+<body>
+    <div id="toast-container"></div>
+    <header>
+        <div class="container">
+            <nav>
+                <a href="index.html" class="logo">灵墨创意</a>
+                <ul class="nav-links">
+                    <li><a href="index.html">首页</a></li>
+                    <li><a href="hobbies.html">兴趣爱好</a></li>
+                    <li><a href="portfolio.html">个人作品</a></li>
+                    <li><a href="review-status.html" style="color:var(--primary)">审稿状态</a></li>
+                    <li><a href="contact.html">联系我</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="wrap">
+        <h1>实习日记 · 审稿与公开渠道状态</h1>
+        <p class="sub">每篇日记的公开文本只从“已批准的公开稿”派生。下面展示网页正文、搜索索引/摘要、RSS、摘要卡、下载文本五个渠道<b>实际生效的版本</b>与撤回进度；原稿与未批准的修改不会出现在任何渠道。</p>
+        <div class="notice">
+            撤回只代表我们控制的公开渠道按版本下线，<b>不能承诺删除访客此前已经另存、截图或第三方转载的副本</b>。
+            读者带着旧版本链接返回时，仍看到原来的来源版本（或该版本的撤回说明），不会被跳到内容不相干的新项目。
+        </div>
+        <div id="status-root"><p class="loading">正在读取状态数据…</p></div>
+
+        <div class="rulebox">
+            <h2>规则辅助检测的能力边界</h2>
+            <p class="sub">规则命中只生成“待确认”片段，是否敏感以人工标注为准；放行误报必须填写理由。</p>
+            <ul id="rule-limits"></ul>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-bottom">
+                <p>&copy; 2026 林墨的个人主页 · 审稿流程演示</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- file:// 直接打开时 fetch 可能受限：内嵌一份演示快照作为兜底 -->
+    <script id="fallback-status" type="application/json">
+{ "generated_at": null, "entries": [], "rule_limits": { "misses": [], "falsePositives": [], "policy": "" }, "channel_name": {}, "fallback": true,
+  "notice": "当前为内嵌兜底快照：请运行 node review-workflow/demo.js 生成 data/status.json，或通过 HTTP 访问本页以获取最新状态。" }
+    </script>
+    <script>
+        const CN_STATUS = { live: '在线', withdrawing: '撤回中', withdrawn: '已撤回', not_published: '未发布' };
+        const ENTRY_STATUS = { editing: '编辑中', awaiting_review: '待审', approved: '已批准', revision_changed: '原稿已改·待重审', withdrawn: '已撤回' };
+
+        function esc(s) {
+            return String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+        }
+
+        function render(data) {
+            if (data.fallback) {
+                const n = document.createElement('div');
+                n.className = 'notice';
+                n.textContent = data.notice;
+                document.getElementById('status-root').replaceChildren(n);
+            } else {
+                const root = document.getElementById('status-root');
+                root.replaceChildren(...data.entries.map((entry) => {
+                    const box = document.createElement('div');
+                    box.className = 'entry';
+                    const rows = entry.channels.map((c) => `
+                        <tr>
+                            <td>${esc(data.channel_name[c.channel] || c.channel)}</td>
+                            <td><span class="pill ${esc(c.status)}">${CN_STATUS[c.status] || esc(c.status)}</span></td>
+                            <td>${c.effective_seq == null ? '—' : `<span class="ver">v${c.effective_seq}</span>`}</td>
+                            <td>${c.pending_jobs ? c.pending_jobs + ' 个任务排队' : '—'}</td>
+                        </tr>`).join('');
+                    const versions = entry.public_versions.map((v) => `v${v.seq}${v.withdrawn ? '（已撤回' + (v.reason ? '：' + esc(v.reason) : '') + '）' : ''}`).join('、') || '无公开稿';
+                    box.innerHTML = `
+                        <h3>${esc(entry.title)}</h3>
+                        <div class="entry-meta">日记状态：${ENTRY_STATUS[entry.entry_status] || esc(entry.entry_status)} · 公开版本：${versions}</div>
+                        <table>
+                            <thead><tr><th>公开渠道</th><th>实际状态</th><th>实际版本</th><th>处理进度</th></tr></thead>
+                            <tbody>${rows}</tbody>
+                        </table>`;
+                    return box;
+                }));
+            }
+            const ul = document.getElementById('rule-limits');
+            const rl = data.rule_limits || {};
+            const items = [
+                ...(rl.misses || []).map((t) => `规则的遗漏：${t}`),
+                ...(rl.falsePositives || []).map((t) => `可能的误报：${t}`),
+            ];
+            if (rl.policy) items.push(rl.policy);
+            ul.replaceChildren(...items.map((t) => {
+                const li = document.createElement('li');
+                li.textContent = t;
+                return li;
+            }));
+        }
+
+        async function load() {
+            try {
+                const res = await fetch('data/status.json', { cache: 'no-store' });
+                if (!res.ok) throw new Error('http ' + res.status);
+                render(await res.json());
+            } catch (err) {
+                render(JSON.parse(document.getElementById('fallback-status').textContent));
+            }
+        }
+        load();
+    </script>
+</body>
+</html>

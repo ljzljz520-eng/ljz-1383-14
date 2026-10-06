@@ -1,0 +1,282 @@
+{
+  "generated_at": "2026-10-06T20:22:40.021Z",
+  "notice": "撤回进度仅代表本站控制的公开渠道；无法承诺删除访客已自行另存/转载的副本。",
+  "rule_limits": {
+    "misses": [
+      "语义敏感：未点名的人物指代、客户内部项目代号、可被推断的身份组合（岗位+部门+时间）",
+      "文本变形：全角数字、插空格/符号（1 3 8 xxxx）、拼音谐音、截图或图片里的文字（OCR 未覆盖）",
+      "附件与元数据：照片 EXIF 中的 GPS/相机序列号、文档作者、PDF 图层与批注，正文规则完全看不到",
+      "上下文关联：单句无敏感词，但与历史日记/公开信息组合后可定位个人"
+    ],
+    "falsePositives": [
+      "已公开的客服邮箱、官网 400 电话、文档示例号（如 13800000000 演示值）",
+      "长订单号/工单号满足 Luhn 或长度特征，被当成身份证/银行卡",
+      "技术文章中的内网网段示例、示例 token 字符串"
+    ],
+    "policy": "规则命中只生成“待确认”片段；是否敏感以人工标注为准。放行误报必须填写理由(dismiss_reason)。"
+  },
+  "entries": [
+    {
+      "entry_id": "entry_mux4ky9v_1_ekr8fu",
+      "title": "第3周实习日记｜脱敏演练",
+      "entry_status": "withdrawn",
+      "channels": [
+        {
+          "channel": "web",
+          "status": "withdrawn",
+          "effective_seq": 1,
+          "effective_epoch": 2,
+          "pending_jobs": 0
+        },
+        {
+          "channel": "search",
+          "status": "withdrawn",
+          "effective_seq": 1,
+          "effective_epoch": 2,
+          "pending_jobs": 0
+        },
+        {
+          "channel": "rss",
+          "status": "withdrawn",
+          "effective_seq": 1,
+          "effective_epoch": 2,
+          "pending_jobs": 0
+        },
+        {
+          "channel": "card",
+          "status": "withdrawn",
+          "effective_seq": 1,
+          "effective_epoch": 2,
+          "pending_jobs": 0
+        },
+        {
+          "channel": "download",
+          "status": "withdrawn",
+          "effective_seq": 1,
+          "effective_epoch": 2,
+          "pending_jobs": 0
+        }
+      ],
+      "public_versions": [
+        {
+          "seq": 1,
+          "withdrawn": true,
+          "reason": "引用项目《客户结算后台》转私密"
+        }
+      ]
+    },
+    {
+      "entry_id": "entry_mux4kya0_u_gpaq41",
+      "title": "第4周实习日记｜并发改写",
+      "entry_status": "approved",
+      "channels": [
+        {
+          "channel": "web",
+          "status": "live",
+          "effective_seq": 1,
+          "effective_epoch": 1,
+          "pending_jobs": 0
+        },
+        {
+          "channel": "search",
+          "status": "live",
+          "effective_seq": 1,
+          "effective_epoch": 1,
+          "pending_jobs": 0
+        },
+        {
+          "channel": "rss",
+          "status": "live",
+          "effective_seq": 1,
+          "effective_epoch": 1,
+          "pending_jobs": 0
+        },
+        {
+          "channel": "card",
+          "status": "live",
+          "effective_seq": 1,
+          "effective_epoch": 1,
+          "pending_jobs": 0
+        },
+        {
+          "channel": "download",
+          "status": "live",
+          "effective_seq": 1,
+          "effective_epoch": 1,
+          "pending_jobs": 0
+        }
+      ],
+      "public_versions": [
+        {
+          "seq": 1,
+          "withdrawn": false,
+          "reason": ""
+        }
+      ]
+    },
+    {
+      "entry_id": "entry_mux4kya1_1j_45i89m",
+      "title": "第5周实习日记｜迟到任务",
+      "entry_status": "approved",
+      "channels": [
+        {
+          "channel": "web",
+          "status": "live",
+          "effective_seq": 2,
+          "effective_epoch": 2,
+          "pending_jobs": 0
+        },
+        {
+          "channel": "search",
+          "status": "live",
+          "effective_seq": 2,
+          "effective_epoch": 2,
+          "pending_jobs": 0
+        },
+        {
+          "channel": "rss",
+          "status": "live",
+          "effective_seq": 2,
+          "effective_epoch": 2,
+          "pending_jobs": 0
+        },
+        {
+          "channel": "card",
+          "status": "live",
+          "effective_seq": 2,
+          "effective_epoch": 2,
+          "pending_jobs": 0
+        },
+        {
+          "channel": "download",
+          "status": "live",
+          "effective_seq": 2,
+          "effective_epoch": 2,
+          "pending_jobs": 0
+        }
+      ],
+      "public_versions": [
+        {
+          "seq": 1,
+          "withdrawn": false,
+          "reason": ""
+        },
+        {
+          "seq": 2,
+          "withdrawn": false,
+          "reason": ""
+        }
+      ]
+    },
+    {
+      "entry_id": "entry_mux4kya4_2s_5u0gdd",
+      "title": "第6周实习日记｜缓存滞后",
+      "entry_status": "approved",
+      "channels": [
+        {
+          "channel": "web",
+          "status": "live",
+          "effective_seq": 2,
+          "effective_epoch": 2,
+          "pending_jobs": 0
+        },
+        {
+          "channel": "search",
+          "status": "live",
+          "effective_seq": 2,
+          "effective_epoch": 2,
+          "pending_jobs": 0
+        },
+        {
+          "channel": "rss",
+          "status": "live",
+          "effective_seq": 2,
+          "effective_epoch": 2,
+          "pending_jobs": 0
+        },
+        {
+          "channel": "card",
+          "status": "live",
+          "effective_seq": 2,
+          "effective_epoch": 2,
+          "pending_jobs": 0
+        },
+        {
+          "channel": "download",
+          "status": "live",
+          "effective_seq": 2,
+          "effective_epoch": 2,
+          "pending_jobs": 0
+        }
+      ],
+      "public_versions": [
+        {
+          "seq": 1,
+          "withdrawn": false,
+          "reason": ""
+        },
+        {
+          "seq": 2,
+          "withdrawn": false,
+          "reason": ""
+        }
+      ]
+    },
+    {
+      "entry_id": "entry_mux4kya8_3x_hkpy1q",
+      "title": "第7周实习日记｜图片替换",
+      "entry_status": "awaiting_review",
+      "channels": [
+        {
+          "channel": "web",
+          "status": "live",
+          "effective_seq": 1,
+          "effective_epoch": 1,
+          "pending_jobs": 0
+        },
+        {
+          "channel": "search",
+          "status": "live",
+          "effective_seq": 1,
+          "effective_epoch": 1,
+          "pending_jobs": 0
+        },
+        {
+          "channel": "rss",
+          "status": "live",
+          "effective_seq": 1,
+          "effective_epoch": 1,
+          "pending_jobs": 0
+        },
+        {
+          "channel": "card",
+          "status": "live",
+          "effective_seq": 1,
+          "effective_epoch": 1,
+          "pending_jobs": 0
+        },
+        {
+          "channel": "download",
+          "status": "live",
+          "effective_seq": 1,
+          "effective_epoch": 1,
+          "pending_jobs": 0
+        }
+      ],
+      "public_versions": [
+        {
+          "seq": 1,
+          "withdrawn": false,
+          "reason": ""
+        }
+      ]
+    }
+  ],
+  "channel_name": {
+    "web": "网页正文",
+    "search": "搜索索引/摘要",
+    "rss": "RSS",
+    "card": "摘要卡",
+    "download": "下载文本"
+  }
+}
